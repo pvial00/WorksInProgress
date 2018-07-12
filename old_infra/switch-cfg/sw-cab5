@@ -1,0 +1,830 @@
+## Last commit: 2011-12-06 11:26:53 UTC by root
+version 10.4R3.4;
+system {
+    host-name switch0.cab6.la.bo;
+    root-authentication {
+        encrypted-password "$1$AyBu0qUp$BGuwKDOB0k7H/BbJx7zxr."; ## SECRET-DATA
+    }
+    services {
+        ssh {
+            protocol-version v2;
+        }
+        netconf {
+            ssh;
+        }
+        web-management {
+            http;
+        }
+    }
+    syslog {
+        user * {
+            any emergency;
+        }                               
+        file messages {
+            any notice;
+            authorization info;
+        }
+        file interactive-commands {
+            interactive-commands any;
+        }
+    }
+}
+interfaces {
+    ge-0/0/0 {
+        mtu 9216;
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ ipmi mgmt service storage virt-mgmt virt-service virt-storage dev-service dev-storage dev-ipmi ];
+                }
+                native-vlan-id dev-boot;
+            }                           
+        }
+    }
+    ge-0/0/1 {
+        mtu 9216;
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ ipmi mgmt service storage virt-mgmt virt-service virt-storage dev-service dev-storage dev-ipmi ];
+                }
+                native-vlan-id dev-boot;
+            }
+        }
+    }
+    ge-0/0/2 {
+        mtu 9216;
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {                  
+                    members [ ipmi mgmt service storage virt-mgmt virt-service virt-storage dev-service dev-storage dev-ipmi ];
+                }
+                native-vlan-id dev-boot;
+            }
+        }
+    }
+    ge-0/0/3 {
+        mtu 9216;
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ ipmi mgmt service storage virt-mgmt virt-service virt-storage dev-service dev-storage dev-ipmi ];
+                }
+                native-vlan-id dev-boot;
+            }
+        }
+    }
+    ge-0/0/4 {                          
+        mtu 9216;
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ ipmi mgmt service storage virt-mgmt virt-service virt-storage dev-service dev-storage dev-ipmi ];
+                }
+                native-vlan-id dev-boot;
+            }
+        }
+    }
+    ge-0/0/5 {
+        mtu 9216;
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ ipmi mgmt service storage virt-mgmt virt-service virt-storage dev-service dev-storage dev-ipmi ];
+                }                       
+                native-vlan-id dev-boot;
+            }
+        }
+    }
+    ge-0/0/6 {
+        mtu 9216;
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ ipmi mgmt service storage virt-mgmt virt-service virt-storage dev-service dev-storage dev-ipmi ];
+                }
+                native-vlan-id dev-boot;
+            }
+        }
+    }
+    ge-0/0/7 {
+        mtu 9216;
+        unit 0 {
+            family ethernet-switching { 
+                port-mode trunk;
+                vlan {
+                    members [ ipmi mgmt service storage virt-mgmt virt-service virt-storage dev-service dev-storage dev-ipmi ];
+                }
+                native-vlan-id dev-boot;
+            }
+        }
+    }
+    ge-0/0/8 {
+        mtu 9216;
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ ipmi mgmt service storage virt-mgmt virt-service virt-storage dev-service dev-storage dev-ipmi ];
+                }
+                native-vlan-id dev-boot;
+            }
+        }                               
+    }
+    ge-0/0/9 {
+        mtu 9216;
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ ipmi mgmt service storage virt-mgmt virt-service virt-storage dev-service dev-storage dev-ipmi ];
+                }
+                native-vlan-id dev-boot;
+            }
+        }
+    }
+    ge-0/0/10 {
+        mtu 9216;
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ ipmi mgmt service storage virt-mgmt virt-service virt-storage dev-service dev-storage dev-ipmi ];
+                }
+                native-vlan-id dev-boot;
+            }
+        }
+    }
+    ge-0/0/11 {
+        mtu 9216;
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ ipmi mgmt service storage virt-mgmt virt-service virt-storage dev-service dev-storage dev-ipmi ];
+                }
+                native-vlan-id dev-boot;
+            }
+        }
+    }
+    ge-0/0/12 {
+        mtu 9216;                       
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ ipmi mgmt service storage virt-mgmt virt-service virt-storage dev-service dev-storage dev-ipmi ];
+                }
+                native-vlan-id dev-boot;
+            }
+        }
+    }
+    ge-0/0/13 {
+        mtu 9216;
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ ipmi mgmt service storage virt-mgmt virt-service virt-storage dev-service dev-storage dev-ipmi ];
+                }
+                native-vlan-id dev-boot;
+            }
+        }
+    }
+    ge-0/0/14 {
+        mtu 9216;
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ ipmi mgmt service storage virt-mgmt virt-service virt-storage dev-service dev-storage dev-ipmi ];
+                }
+                native-vlan-id dev-boot;
+            }
+        }
+    }
+    ge-0/0/15 {
+        mtu 9216;
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;        
+                vlan {
+                    members [ ipmi mgmt service storage virt-mgmt virt-service virt-storage dev-service dev-storage dev-ipmi ];
+                }
+                native-vlan-id dev-boot;
+            }
+        }
+    }
+    ge-0/0/16 {
+        mtu 9216;
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ ipmi mgmt service storage virt-mgmt virt-service virt-storage dev-service dev-storage dev-ipmi ];
+                }
+                native-vlan-id dev-boot;
+            }
+        }
+    }                                   
+    ge-0/0/17 {
+        mtu 9216;
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ ipmi mgmt service storage virt-mgmt virt-service virt-storage dev-service dev-storage dev-ipmi ];
+                }
+                native-vlan-id dev-boot;
+            }
+        }
+    }
+    ge-0/0/18 {
+        mtu 9216;
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ ipmi mgmt service storage virt-mgmt virt-service virt-storage dev-service dev-storage dev-ipmi ];
+                }
+                native-vlan-id dev-boot;
+            }
+        }
+    }
+    ge-0/0/19 {
+        mtu 9216;
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ ipmi mgmt service storage virt-mgmt virt-service virt-storage dev-service dev-storage dev-ipmi ];
+                }
+                native-vlan-id dev-boot;
+            }
+        }
+    }
+    ge-0/0/20 {
+        mtu 9216;                       
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ ipmi mgmt service storage virt-mgmt virt-service virt-storage dev-service dev-storage dev-ipmi ];
+                }
+                native-vlan-id dev-boot;
+            }
+        }
+    }
+    ge-0/0/21 {
+        mtu 9216;
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ ipmi mgmt service storage virt-mgmt virt-service virt-storage dev-service dev-storage dev-ipmi ];
+                }
+                native-vlan-id dev-boot;
+            }
+        }
+    }
+    ge-0/0/22 {
+        mtu 9216;
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ ipmi mgmt service storage virt-mgmt virt-service virt-storage dev-service dev-storage dev-ipmi ];
+                }
+                native-vlan-id dev-boot;
+            }
+        }
+    }
+    ge-0/0/23 {
+        unit 0 {
+            family ethernet-switching;
+        }
+    }                                   
+    ge-0/1/0 {
+        mtu 9216;
+        unit 0 {
+            family ethernet-switching;
+        }
+    }
+    xe-0/1/0 {
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ trust ipmi mgmt service storage virt-mgmt virt-service virt-storage dev-service dev-storage dev-ipmi dev-boot ];
+                }
+            }
+        }
+    }
+    ge-0/1/1 {
+        mtu 9216;
+        unit 0 {
+            family ethernet-switching;  
+        }
+    }
+    xe-0/1/1 {
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members trust;
+                }
+            }
+        }
+    }
+    ge-0/1/2 {
+        mtu 9216;
+        unit 0 {
+            family ethernet-switching;
+        }
+    }
+    ge-0/1/3 {
+        mtu 9216;
+        unit 0 {                        
+            family ethernet-switching;
+        }
+    }
+    ge-1/0/0 {
+        mtu 9216;
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ ipmi mgmt service storage virt-mgmt virt-service virt-storage dev-service dev-storage dev-ipmi ];
+                }
+                native-vlan-id dev-boot;
+            }
+        }
+    }
+    ge-1/0/1 {
+        mtu 9216;
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;        
+                vlan {
+                    members [ ipmi mgmt service storage virt-mgmt virt-service virt-storage dev-service dev-storage dev-ipmi ];
+                }
+                native-vlan-id dev-boot;
+            }
+        }
+    }
+    ge-1/0/2 {
+        mtu 9216;
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ ipmi mgmt service storage virt-mgmt virt-service virt-storage dev-service dev-storage dev-ipmi ];
+                }
+                native-vlan-id dev-boot;
+            }
+        }
+    }                                   
+    ge-1/0/3 {
+        mtu 9216;
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ ipmi mgmt service storage virt-mgmt virt-service virt-storage dev-service dev-storage dev-ipmi ];
+                }
+                native-vlan-id dev-boot;
+            }
+        }
+    }
+    ge-1/0/4 {
+        mtu 9216;
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ ipmi mgmt service storage virt-mgmt virt-service virt-storage dev-service dev-storage dev-ipmi ];
+                }
+                native-vlan-id dev-boot;
+            }
+        }
+    }
+    ge-1/0/5 {
+        mtu 9216;
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ ipmi mgmt service storage virt-mgmt virt-service virt-storage dev-service dev-storage dev-ipmi ];
+                }
+                native-vlan-id dev-boot;
+            }
+        }
+    }
+    ge-1/0/6 {
+        mtu 9216;                       
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ ipmi mgmt service storage virt-mgmt virt-service virt-storage dev-service dev-storage dev-ipmi ];
+                }
+                native-vlan-id dev-boot;
+            }
+        }
+    }
+    ge-1/0/7 {
+        mtu 9216;
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ ipmi mgmt service storage virt-mgmt virt-service virt-storage dev-service dev-storage dev-ipmi ];
+                }
+                native-vlan-id dev-boot;
+            }
+        }
+    }
+    ge-1/0/8 {
+        mtu 9216;
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ ipmi mgmt service storage virt-mgmt virt-service virt-storage dev-service dev-storage dev-ipmi ];
+                }
+                native-vlan-id dev-boot;
+            }
+        }
+    }
+    ge-1/0/9 {
+        mtu 9216;
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;        
+                vlan {
+                    members [ ipmi mgmt service storage virt-mgmt virt-service virt-storage dev-service dev-storage dev-ipmi ];
+                }
+                native-vlan-id dev-boot;
+            }
+        }
+    }
+    ge-1/0/10 {
+        mtu 9216;
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ ipmi mgmt service storage virt-mgmt virt-service virt-storage dev-service dev-storage dev-ipmi ];
+                }
+                native-vlan-id dev-boot;
+            }
+        }
+    }                                   
+    ge-1/0/11 {
+        mtu 9216;
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ ipmi mgmt service storage virt-mgmt virt-service virt-storage dev-service dev-storage dev-ipmi ];
+                }
+                native-vlan-id dev-boot;
+            }
+        }
+    }
+    ge-1/0/12 {
+        mtu 9216;
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ ipmi mgmt service storage virt-mgmt virt-service virt-storage dev-service dev-storage dev-ipmi ];
+                }
+                native-vlan-id dev-boot;
+            }
+        }
+    }
+    ge-1/0/13 {
+        mtu 9216;
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ ipmi mgmt service storage virt-mgmt virt-service virt-storage dev-service dev-storage dev-ipmi ];
+                }
+                native-vlan-id dev-boot;
+            }
+        }
+    }
+    ge-1/0/14 {
+        mtu 9216;                       
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ ipmi mgmt service storage virt-mgmt virt-service virt-storage dev-service dev-storage dev-ipmi ];
+                }
+                native-vlan-id dev-boot;
+            }
+        }
+    }
+    ge-1/0/15 {
+        mtu 9216;
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ ipmi mgmt service storage virt-mgmt virt-service virt-storage dev-service dev-storage dev-ipmi ];
+                }
+                native-vlan-id dev-boot;
+            }
+        }
+    }
+    ge-1/0/16 {
+        mtu 9216;
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ ipmi mgmt service storage virt-mgmt virt-service virt-storage dev-service dev-storage dev-ipmi ];
+                }
+                native-vlan-id dev-boot;
+            }
+        }
+    }
+    ge-1/0/17 {
+        mtu 9216;
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;        
+                vlan {
+                    members [ ipmi mgmt service storage virt-mgmt virt-service virt-storage dev-service dev-storage dev-ipmi ];
+                }
+                native-vlan-id dev-boot;
+            }
+        }
+    }
+    ge-1/0/18 {
+        mtu 9216;
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ ipmi mgmt service storage virt-mgmt virt-service virt-storage dev-service dev-storage dev-ipmi ];
+                }
+                native-vlan-id dev-boot;
+            }
+        }
+    }                                   
+    ge-1/0/19 {
+        mtu 9216;
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ ipmi mgmt service storage virt-mgmt virt-service virt-storage dev-service dev-storage dev-ipmi ];
+                }
+                native-vlan-id dev-boot;
+            }
+        }
+    }
+    ge-1/0/20 {
+        mtu 9216;
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ ipmi mgmt service storage virt-mgmt virt-service virt-storage dev-service dev-storage dev-ipmi ];
+                }
+                native-vlan-id dev-boot;
+            }
+        }
+    }
+    ge-1/0/21 {
+        mtu 9216;
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ ipmi mgmt service storage virt-mgmt virt-service virt-storage dev-service dev-storage dev-ipmi ];
+                }
+                native-vlan-id dev-boot;
+            }
+        }
+    }
+    ge-1/0/22 {
+        mtu 9216;                       
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ ipmi mgmt service storage virt-mgmt virt-service virt-storage dev-service dev-storage dev-ipmi ];
+                }
+                native-vlan-id dev-boot;
+            }
+        }
+    }
+    ge-1/0/23 {
+        unit 0 {
+            family ethernet-switching;
+        }
+    }
+    xe-1/1/0 {
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {                  
+                    members [ trust ipmi mgmt service storage virt-mgmt virt-service virt-storage dev-service dev-storage dev-ipmi dev-boot ];
+                }
+            }
+        }
+    }
+    xe-1/1/1 {
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members trust;
+                }
+            }
+        }
+    }
+    vlan {
+        unit 0 {
+            family inet;
+        }
+        unit 10 {                       
+            family inet {
+                address 10.21.6.254/16;
+            }
+        }
+        unit 20 {
+            family inet {
+                address 10.22.6.254/16;
+            }
+        }
+        unit 30 {
+            family inet {
+                address 10.23.6.254/16;
+            }
+        }
+        unit 40 {
+            family inet {
+                address 10.24.6.254/16;
+            }
+        }
+        unit 55 {
+            description trust;          
+            family inet {
+                address 10.1.1.7/24;
+                address 192.168.1.6/24;
+            }
+        }
+    }
+    vme {
+        unit 0 {
+            family inet {
+                address 192.168.2.1/24;
+            }
+        }
+    }
+}
+forwarding-options {
+    helpers {
+        tftp {
+            interface {
+                vlan.40 {
+                    server 10.24.0.2;
+                }                       
+                vlan.10 {
+                    server 10.21.0.2;
+                }
+                vlan.20 {
+                    server 10.22.0.2;
+                }
+                vlan.30 {
+                    server 10.23.0.2;
+                }
+            }
+        }
+        bootp {
+            interface {
+                vlan.40 {
+                    server 10.24.0.2;
+                }
+                vlan.10 {
+                    server 10.21.0.2;
+                }
+                vlan.20 {
+                    server 10.22.0.2;   
+                }
+                vlan.30 {
+                    server 10.23.0.2;
+                }
+            }
+        }
+    }
+}
+routing-options {
+    static {
+        route 0.0.0.0/0 next-hop 10.21.0.1;
+    }
+}
+protocols {
+    igmp-snooping {
+        vlan all;
+    }
+    rstp;
+    lldp {
+        interface all;
+    }                                   
+    lldp-med {
+        interface all;
+    }
+}
+ethernet-switching-options {
+    voip;
+    storm-control {
+        interface all;
+    }
+}
+vlans {
+    boot {
+        description "Boot VLAN";
+        vlan-id 244;
+    }
+    default {
+        l3-interface vlan.0;
+    }
+    dev-boot {
+        vlan-id 40;
+        l3-interface vlan.40;           
+    }
+    dev-ipmi {
+        vlan-id 30;
+        l3-interface vlan.30;
+    }
+    dev-service {
+        vlan-id 10;
+        l3-interface vlan.10;
+    }
+    dev-storage {
+        vlan-id 20;
+        l3-interface vlan.20;
+    }
+    ipmi {
+        description "IPMI VLAN";
+        vlan-id 255;
+    }
+    mgmt {
+        description "Management VLAN";
+        vlan-id 233;
+    }                                   
+    service {
+        description "Service VLAN";
+        vlan-id 211;
+    }
+    storage {
+        description "Storage VLAN";
+        vlan-id 222;
+    }
+    trust {
+        description Trust;
+        vlan-id 55;
+        l3-interface vlan.55;
+    }
+    virt-mgmt {
+        description "Virtual MGMT VLAN";
+        vlan-id 288;
+    }
+    virt-service {
+        description "Virtual Service VLAN";
+        vlan-id 266;
+    }                                   
+    virt-storage {
+        description "Virtual Storage VLAN";
+        vlan-id 277;
+    }
+}
+poe {
+    interface all;
+}
+virtual-chassis {
+    preprovisioned;
+    member 0 {
+        role routing-engine;
+        serial-number BM0210283895;
+    }
+    member 1 {
+        role routing-engine;
+        serial-number BM0210283899;
+    }
+}
+

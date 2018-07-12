@@ -1,0 +1,867 @@
+## Last commit: 2015-08-31 05:48:18 UTC by root
+version 11.1R2.3;
+system {
+    host-name core1.hw.la;
+    backup-router 192.168.98.254;
+    root-authentication {
+        encrypted-password "$1$D2aPb7Sj$tPFBaGoYixc7iE6PKuWOS/"; ## SECRET-DATA
+    }
+    services {
+        ssh {
+            protocol-version v2;
+        }
+        netconf {
+            ssh;
+        }
+        web-management {
+            http;
+        }
+    }
+    syslog {
+        user * {
+            any emergency;
+        }
+        file messages {                 
+            any notice;
+            authorization info;
+        }
+        file interactive-commands {
+            interactive-commands any;
+        }
+    }
+}
+chassis {
+    aggregated-devices {
+        ethernet {
+            device-count 2;
+        }
+    }
+    alarm {
+        management-ethernet {
+            link-down ignore;
+        }
+    }
+}
+interfaces {
+    xe-0/0/0 {
+        description switch0.cab1.la.bo; 
+        mtu 1514;
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ trust newservice newstorage newipmi newboot link ];
+                }
+            }
+        }
+    }
+    xe-0/0/1 {
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ trust newservice newstorage newipmi newboot link ];
+                }
+            }
+        }
+    }
+    xe-0/0/2 {                          
+        description switch0.cab2.la.bo;
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ trust newservice newstorage newipmi newboot link ];
+                }
+            }
+        }
+    }
+    xe-0/0/3 {
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ trust newservice newstorage newipmi newboot link ];
+                }
+            }
+        }
+    }
+    xe-0/0/4 {                          
+        description switch0.cab3.la.bo;
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ trust newservice newstorage newipmi newboot link ];
+                }
+            }
+        }
+    }
+    xe-0/0/5 {
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ trust newservice newstorage newipmi newboot link ];
+                }
+            }
+        }
+    }
+    xe-0/0/6 {                          
+        description switch0.cab4.la.bo;
+        mtu 1514;
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ trust newservice newstorage newipmi newboot link ];
+                }
+            }
+        }
+    }
+    xe-0/0/7 {
+        mtu 1514;
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ trust newservice newstorage newipmi newboot link ];
+                }
+            }
+        }                               
+    }
+    xe-0/0/8 {
+        description switch0.cab5.la.bo;
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ trust newservice newstorage newipmi newboot link ];
+                }
+            }
+        }
+    }
+    xe-0/0/9 {
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ trust newservice newstorage newipmi newboot link ];
+                }
+            }
+        }                               
+    }
+    xe-0/0/10 {
+        description switch0.cab6.la.bo;
+        mtu 1514;
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ trust newservice newstorage newipmi newboot link ];
+                }
+            }
+        }
+    }
+    xe-0/0/11 {
+        mtu 1514;
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ trust newservice newstorage newipmi newboot link ];
+                }                       
+            }
+        }
+    }
+    xe-0/0/12 {
+        unit 0 {
+            family ethernet-switching;
+        }
+    }
+    xe-0/0/13 {
+        unit 0 {
+            family ethernet-switching;
+        }
+    }
+    xe-0/0/14 {
+        mtu 9000;
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ trust newservice newstorage newipmi newboot link ];
+                }
+            }                           
+        }
+    }
+    xe-0/0/15 {
+        unit 0 {
+            family ethernet-switching;
+        }
+    }
+    xe-0/0/16 {
+        mtu 1514;
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ trust newservice newstorage newipmi newboot link ];
+                }
+            }
+        }
+    }
+    xe-0/0/17 {
+        mtu 1514;
+        unit 0 {
+            family ethernet-switching { 
+                port-mode trunk;
+                vlan {
+                    members [ trust newservice newstorage newipmi newboot link ];
+                }
+            }
+        }
+    }
+    xe-0/0/18 {
+        unit 0 {
+            family ethernet-switching;
+        }
+    }
+    xe-0/0/19 {
+        unit 0 {
+            family ethernet-switching;
+        }
+    }
+    xe-0/0/20 {
+        unit 0 {
+            family ethernet-switching;
+        }
+    }                                   
+    xe-0/0/21 {
+        unit 0 {
+            family ethernet-switching;
+        }
+    }
+    xe-0/0/22 {
+        unit 0 {
+            family ethernet-switching;
+        }
+    }
+    xe-0/0/23 {
+        unit 0 {
+            family ethernet-switching;
+        }
+    }
+    xe-0/0/24 {
+        unit 0 {
+            family ethernet-switching;
+        }
+    }
+    xe-0/0/25 {
+        unit 0 {
+            family ethernet-switching;  
+        }
+    }
+    xe-0/0/26 {
+        unit 0 {
+            family ethernet-switching;
+        }
+    }
+    xe-0/0/27 {
+        unit 0 {
+            family ethernet-switching;
+        }
+    }
+    xe-0/0/28 {
+        unit 0 {
+            family ethernet-switching;
+        }
+    }
+    xe-0/0/29 {
+        unit 0 {
+            family ethernet-switching;
+        }
+    }
+    xe-0/0/30 {                         
+        unit 0 {
+            family ethernet-switching;
+        }
+    }
+    xe-0/0/31 {
+        unit 0 {
+            family ethernet-switching;
+        }
+    }
+    xe-0/0/32 {
+        mtu 9000;
+        unit 0 {
+            family inet {
+                address 10.13.37.69/30;
+            }
+        }
+    }
+    xe-0/0/33 {
+        unit 0 {
+            family ethernet-switching;
+        }
+    }
+    xe-0/0/34 {                         
+        unit 0 {
+            family ethernet-switching;
+        }
+    }
+    xe-0/0/35 {
+        unit 0 {
+            family ethernet-switching;
+        }
+    }
+    xe-0/0/36 {
+        unit 0 {
+            family ethernet-switching;
+        }
+    }
+    ge-0/0/37 {
+        description fw0;
+        mtu 1514;
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ trust newservice newstorage newipmi newboot link ];
+                }
+            }
+        }
+    }
+    xe-0/0/38 {
+        unit 0 {
+            family ethernet-switching;
+        }
+    }
+    ge-0/0/39 {
+        description fw0;
+        mtu 1514;
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ trust newservice newstorage newipmi newboot link ];
+                }
+            }
+        }
+    }                                   
+    xe-0/0/39 {
+        unit 0 {
+            family ethernet-switching;
+        }
+    }
+    xe-0/1/0 {
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ trust newservice newstorage newipmi newboot link ];
+                }
+            }
+        }
+    }
+    xe-0/1/1 {
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ trust newservice newstorage newipmi newboot link ];
+                }
+            }
+        }
+    }
+    xe-0/1/2 {
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ trust newservice newstorage newipmi newboot link ];
+                }
+            }
+        }
+    }
+    xe-0/1/3 {
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ trust newservice newstorage newipmi newboot link ];
+                }
+            }
+        }
+    }
+    xe-0/1/4 {
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ trust newservice newstorage newipmi newboot link ];
+                }
+            }
+        }
+    }
+    xe-0/1/5 {
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ trust newservice newstorage newipmi newboot link ];
+                }
+            }
+        }
+    }
+    xe-0/1/6 {
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ trust newservice newstorage newipmi newboot link ];
+                }
+            }
+        }
+    }
+    xe-0/1/7 {
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ trust newservice newstorage newipmi newboot link ];
+                }
+            }
+        }
+    }
+    xe-0/1/8 {
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ trust newservice newstorage newipmi newboot link ];
+                }
+            }
+        }
+    }
+    xe-0/1/9 {
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ trust newservice newstorage newipmi newboot link ];
+                }
+            }
+        }
+    }
+    xe-0/1/10 {
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ trust newservice newstorage newipmi newboot link ];
+                }
+            }
+        }
+    }
+    xe-0/1/11 {
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ trust newservice newstorage newipmi newboot link ];
+                }
+            }
+        }
+    }
+    xe-0/2/0 {
+        unit 0 {
+            family ethernet-switching;
+        }
+    }
+    xe-0/2/1 {
+        unit 0 {
+            family ethernet-switching;
+        }
+    }
+    xe-0/2/2 {
+        unit 0 {
+            family ethernet-switching;
+        }
+    }
+    xe-0/2/3 {
+        unit 0 {
+            family ethernet-switching;  
+        }
+    }
+    xe-1/0/0 {
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ trust newservice newstorage newipmi newboot link ];
+                }
+            }
+        }
+    }
+    xe-1/0/1 {
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ trust newservice newstorage newipmi newboot link ];
+                }
+            }
+        }                               
+    }
+    xe-1/0/2 {
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ trust newservice newstorage newipmi newboot link ];
+                }
+            }
+        }
+    }
+    xe-1/0/3 {
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ trust newservice newstorage newipmi newboot link ];
+                }
+            }
+        }
+    }                                   
+    xe-1/0/4 {
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ trust newservice newstorage newipmi newboot link ];
+                }
+            }
+        }
+    }
+    xe-1/0/5 {
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ trust newservice newstorage newipmi newboot link ];
+                }
+            }
+        }
+    }
+    xe-1/0/6 {                          
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ trust newservice newstorage newipmi newboot link ];
+                }
+            }
+        }
+    }
+    xe-1/0/7 {
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ trust newservice newstorage newipmi newboot link ];
+                }
+            }
+        }
+    }
+    xe-1/0/8 {
+        unit 0 {                        
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ trust newservice newstorage newipmi newboot link ];
+                }
+            }
+        }
+    }
+    xe-1/0/9 {
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ trust newservice newstorage newipmi newboot link ];
+                }
+            }
+        }
+    }
+    xe-1/0/10 {
+        unit 0 {
+            family ethernet-switching { 
+                port-mode trunk;
+                vlan {
+                    members [ trust newservice newstorage newipmi newboot link ];
+                }
+            }
+        }
+    }
+    xe-1/0/11 {
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members [ trust newservice newstorage newipmi newboot link ];
+                }
+            }
+        }
+    }
+    ge-1/0/39 {
+        mtu 1514;
+        unit 0 {
+            family ethernet-switching { 
+                port-mode trunk;
+                vlan {
+                    members [ trust newservice newstorage newipmi newboot link ];
+                }
+                native-vlan-id default;
+            }
+        }
+    }
+    ae0 {
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members trust;
+                }
+            }
+        }
+    }
+    ae1 {
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;        
+                vlan {
+                    members trust;
+                }
+            }
+        }
+    }
+    me0 {
+        unit 0 {
+            family inet {
+                address 192.168.98.1/24;
+            }
+        }
+    }
+    vlan {
+        unit 0 {
+            description default;
+            family inet;
+        }
+        unit 10 {
+            family inet {
+                address 10.21.0.254/16;
+            }
+        }                               
+        unit 20 {
+            family inet {
+                address 10.22.0.254/16;
+            }
+        }
+        unit 30 {
+            family inet {
+                address 10.23.0.254/16;
+            }
+        }
+        unit 40 {
+            family inet {
+                address 10.24.0.254/16;
+            }
+        }
+        unit 55 {
+            family inet {
+                address 10.1.1.254/24;
+            }
+        }
+        unit 666 {
+            family inet {
+                address 10.2.9.8/24;    
+            }
+        }
+    }
+}
+forwarding-options {
+    helpers {
+        tftp {
+            interface {
+                vlan.40 {
+                    server 10.21.0.2;
+                }
+            }
+        }
+        bootp {
+            interface {
+                vlan.40 {
+                    server 10.21.0.2;
+                }
+            }
+        }
+    }
+}
+snmp {                                  
+    name "core switch";
+    description "core switch";
+    location NYJ004;
+    client-list list0 {
+        10.21.0.0/16;
+    }
+    community public {
+        authorization read-only;
+        client-list-name list0;
+    }
+}
+routing-options {
+    static {
+        route 10.66.6.0/24 next-hop 10.21.0.1;
+        route 0.0.0.0/0 next-hop 10.21.0.1;
+        route 10.10.10.0/24 next-hop 10.21.0.1;
+        route 10.66.0.0/24 next-hop 10.21.0.1;
+        route 172.31.65.0/24 next-hop 10.21.0.1;
+    }
+}
+protocols {
+    igmp-snooping {
+        vlan all;                       
+    }
+    rstp;
+    lldp {
+        interface all;
+    }
+    lldp-med {
+        interface all;
+    }
+}
+ethernet-switching-options {
+    voip;
+    storm-control {
+        interface all;
+    }
+}
+vlans {
+    link {
+        vlan-id 666;
+        interface {
+            xe-0/0/0.0;
+            xe-0/0/1.0;
+            xe-0/0/2.0;
+            xe-0/0/3.0;                 
+            xe-0/0/4.0;
+            xe-0/0/5.0;
+            xe-0/0/6.0;
+            xe-0/0/7.0;
+            xe-0/0/8.0;
+            xe-0/0/9.0;
+            xe-0/0/10.0;
+            xe-0/0/11.0;
+            ge-0/0/39.0;
+            ge-1/0/39.0;
+        }
+        l3-interface vlan.666;
+    }
+    newboot {
+        vlan-id 40;
+        interface {
+            xe-0/0/11.0;
+            xe-0/0/10.0;
+            xe-0/0/9.0;
+            xe-0/0/8.0;
+            xe-0/0/7.0;
+            xe-0/0/6.0;
+            xe-0/0/5.0;                 
+            xe-0/0/4.0;
+            xe-0/0/3.0;
+            xe-0/0/2.0;
+            xe-0/0/1.0;
+            xe-0/0/0.0;
+            ge-0/0/39.0;
+            ge-1/0/39.0;
+        }
+        l3-interface vlan.40;
+    }
+    newipmi {
+        vlan-id 30;
+        interface {
+            xe-0/0/11.0;
+            xe-0/0/10.0;
+            xe-0/0/9.0;
+            xe-0/0/8.0;
+            xe-0/0/7.0;
+            xe-0/0/6.0;
+            xe-0/0/5.0;
+            xe-0/0/4.0;
+            xe-0/0/3.0;
+            xe-0/0/2.0;                 
+            xe-0/0/1.0;
+            xe-0/0/0.0;
+            ge-0/0/39.0;
+            ge-1/0/39.0;
+        }
+        l3-interface vlan.30;
+    }
+    newservice {
+        vlan-id 10;
+        interface {
+            xe-0/0/0.0;
+            xe-0/0/1.0;
+            xe-0/0/2.0;
+            xe-0/0/3.0;
+            xe-0/0/4.0;
+            xe-0/0/5.0;
+            xe-0/0/6.0;
+            xe-0/0/7.0;
+            xe-0/0/8.0;
+            xe-0/0/9.0;
+            xe-0/0/10.0;
+            xe-0/0/11.0;
+            ge-0/0/39.0;                
+            ge-1/0/39.0;
+        }
+        l3-interface vlan.10;
+    }
+    newstorage {
+        vlan-id 20;
+        interface {
+            xe-0/0/11.0;
+            xe-0/0/10.0;
+            xe-0/0/9.0;
+            xe-0/0/8.0;
+            xe-0/0/7.0;
+            xe-0/0/6.0;
+            xe-0/0/5.0;
+            xe-0/0/4.0;
+            xe-0/0/3.0;
+            xe-0/0/2.0;
+            xe-0/0/1.0;
+            xe-0/0/0.0;
+            ge-0/0/39.0;
+            ge-1/0/39.0;
+        }
+        l3-interface vlan.20;           
+    }
+    trust {
+        vlan-id 55;
+        l3-interface vlan.55;
+    }
+}
+virtual-chassis {
+    preprovisioned;
+    member 0 {
+        role routing-engine;
+        serial-number GG0211211181;
+    }
+    member 1 {
+        role routing-engine;
+        serial-number GG0211080160;
+    }
+}
+

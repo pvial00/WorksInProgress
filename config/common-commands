@@ -1,0 +1,147 @@
+tcpdump -ni <if> -s 1500 -w <file> host <ip> and port <port>
+ps -e | grep <proc> | awk '{ print $1 }' | xargs kill -9
+shutdown -h now
+ps -aux
+netstat -rn
+netstat -an
+sockstat
+lsof -a
+top
+free
+vmstat
+virsh list
+virsh create path/to/xml
+virsh shutdown
+mtr <ip>
+tracepath <ip>
+ip a
+route add -net 24.0.0.0/8 gw 1.2.3.4
+route del -host 1.2.4.5 gw 1.2.3.5
+sysctl -a
+iptables -A input -s 1.2.3.4 --dport 80 -j DROP
+iptables -F
+kill -HUP <pid>
+pidof <process name>
+ldd <file name>
+file <file name>
+service <name> start|stop|restart
+top
+iftop -ni eth0
+htop
+watch
+pip freeze
+rpm -qa
+yum install <pkg>
+apt-get install <pkg>
+apt-get update
+ln -s /etc/something something
+mkdir -p /make/full/path
+w
+whoami
+uname -a
+df -h
+du -sh
+tar -cvf newtarfile.tar files
+tar -xvzf file.tar.gz
+ssh user@host
+grep -r <searchword> files
+chmod 777, chmod 750, chmod 640, chmod 400, chmod 440
+locate <file name>
+find . -name file.name*
+find /path -type f -mtime +7 -exec rm {} \;
+rpm -i <pkg>
+dpkg -i <pkg>
+grep da * 2> grep-errors.txt (standard error to file)
+grep da * 1>&2 (std error to std out)
+grep * 2>&1 (same)
+rm -f $(find / -name core) &> /dev/null 
+cron:  *5 * * * * /script/to/run.sh
+git pull
+git clone ssh://github@github.com/repo .
+git commit -m
+git add path/to/file
+select something,something2 from mysql.users where password = 'this' order by uid;
+INSERT INTO Customers (CustomerName, ContactName, Address, City, PostalCode, Country)
+VALUES ('Cardinal', 'Tom B. Erichsen', 'Skagen 21', 'Stavanger', '4006', 'Norway');
+UPDATE Customers
+SET ContactName = 'Alfred Schmidt', City= 'Frankfurt'
+WHERE CustomerID = 1;
+DELETE FROM Xtable where uid = '5';
+CREATE DATABASE mybase;
+CREATE TABLE mytable;
+DROP TABLE mytable;
+DROP DATABASE;
+select '*' from users where name like 'fr%';
+CREATE USER 'repl'@'%' IDENTIFIED BY 'password';
+GRANT REPLICATION SLAVE ON *.* TO 'repl'@'%';
+FLUSH TABLES WITH READ LOCK;
+SHOW MASTER STATUS;
+UNLOCK TABLES;
+mysqldump --all-databases --master-data > /tmp/dbdump.db
+mysql -p < /tmp/dbdump.db
+SHOW SLAVE STATUS\G
+ssh -f user@personal-server.com -L 2000:personal-server.com:25 -N
+ssh -f -L 3000:talk.google.com:5222 home -N
+ssh user@host
+scp -r diretory user@host:/path
+-A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+-A INPUT -i eth0 -p tcp -m tcp --dport 22 -j ACCEPT
+-A INPUT -i eth0 -p tcp -m tcp --dport 80 -j ACCEPT
+-A INPUT -i lo -j ACCEPT
+-A INPUT -j LOGNDROP
+-A LOGNDROP -p tcp -m limit --limit 5/min -j LOG --log-prefix "Denied TCP: " --log-level 7
+-A LOGNDROP -p udp -m limit --limit 5/min -j LOG --log-prefix "Denied UDP: " --log-level 7
+-A LOGNDROP -p icmp -m limit --limit 5/min -j LOG --log-prefix "Denied ICMP: " --log-level 7
+-A LOGNDROP -j DROP
+iptables -F
+iptables -X
+iptables -t nat -F
+iptables -t nat -X
+iptables -t mangle -F
+iptables -t mangle -X
+iptables -P INPUT ACCEPT
+iptables -P FORWARD ACCEPT
+iptables -P OUTPUT ACCEPT
+int_if="{ vether0 em1 em2 em3 }"
+table <martians> { 0.0.0.0/8 10.0.0.0/8 127.0.0.0/8 169.254.0.0/16     \
+	 	   172.16.0.0/12 192.0.0.0/24 192.0.2.0/24 224.0.0.0/3 \
+	 	   192.168.0.0/16 198.18.0.0/15 198.51.100.0/24        \
+	 	   203.0.113.0/24 }
+set block-policy drop
+set loginterface egress
+set skip on lo0
+match in all scrub (no-df random-id max-mss 1440)
+match out on egress inet from !(egress:network) to any nat-to (egress:0)
+block in quick on egress from <martians> to any
+block return out quick on egress from any to <martians>
+block all
+pass out quick inet
+pass in on $int_if inet
+pass in on egress inet proto tcp from any to (egress) port 22
+pass in on egress inet proto tcp from any to (egress) port { 80 443 } rdr-to 192.168.1.2
+pfctl -f /etc/pf.conf
+pfctl -f -n /etc/pf.conf
+insmod 8021q
+modprobe 8021q
+systemctl restart network
+ip link add link eth0 name eth0.8 type vlan id 8
+ip -d link show eth0.8
+ip link delete eth0.8
+sudo vconfig add eth1 10
+sudo ip addr add 10.0.0.1/24 dev eth1.10
+sudo ip link set up eth1.10
+sudo su -c 'echo "8021q" >> /etc/modules'
+openssl aes-256-cbc -salt -in filename -out filename.enc
+openssl aes-256-cbc -d -in filename.enc -out filename
+openssl rsa -in [file1.key] -out [file2.key]
+openssl s_client -connect www.google.com:443
+rsync -avr dir1/ dir2/
+rsync -az ~/dir1 username@remote_host:destination_directory
+nmap -A <ip>
+nmap -sP <network>
+nmap -p <port> <host>
+nmap -F <host> (scan 100 common ports)
+nmap -p- <host> (scan all ports)
+nmap -sV -p 443 --script=ssl-heartbleed 192.168.1.0/24
+sysctl -w net.ipv6.conf.default.disable_ipv6=1
+sysctl -w net.ipv6.conf.all.disable_ipv6=1

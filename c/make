@@ -1,0 +1,2 @@
+rm syphon
+gcc syphon.c -o syphon -lpthread

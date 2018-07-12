@@ -1,0 +1,16 @@
+import socket
+from Crypto.Cipher import AES
+
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.bind((socket.gethostname(), 6000))
+s.listen(5)
+
+key='abcdefghijklmnop'
+message='Secret bravo 222'
+obj = AES.new(key, AES.MODE_CBC, '01AB 34ABEDEFTXe')
+krypto = obj.encrypt(message)
+
+while 1:
+        c, addr = s.accept()
+        c.send(krypto)
+        c.close()

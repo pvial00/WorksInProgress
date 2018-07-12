@@ -1,0 +1,633 @@
+: Saved
+: Written by enable_15 at 13:08:06.697 EST Mon Nov 30 2015
+!
+ASA Version 8.6(1)2 
+!
+hostname rack1-asa
+domain-name bo.inc
+enable password XxCuPT5cFk8NySAU encrypted
+passwd wXbFy27rDxv8ML7e encrypted
+names
+name 74.201.250.66 la_ip
+name 69.193.204.50 ny_ip
+name 74.207.229.105 linode
+!
+interface GigabitEthernet0/0
+ no nameif
+ no security-level
+ no ip address
+!
+interface GigabitEthernet0/0.10
+ vlan 10
+ nameif internal.10
+ security-level 100
+ ip address 10.21.0.1 255.255.0.0 standby 10.21.66.1 
+!
+interface GigabitEthernet0/0.20
+ vlan 20
+ nameif internal.20
+ security-level 100
+ ip address 10.22.0.1 255.255.0.0 standby 10.22.66.1 
+!
+interface GigabitEthernet0/0.30
+ vlan 30
+ nameif internal.30
+ security-level 100
+ ip address 10.23.0.1 255.255.0.0 standby 10.23.66.1 
+!
+interface GigabitEthernet0/0.55
+ vlan 55
+ nameif internal.55
+ security-level 100
+ ip address 10.1.1.1 255.255.255.0 standby 10.1.1.3 
+!
+interface GigabitEthernet0/1
+ shutdown
+ no nameif
+ security-level 0
+ no ip address
+!
+interface GigabitEthernet0/2
+ shutdown
+ no nameif
+ no security-level
+ no ip address
+!
+interface GigabitEthernet0/3
+ shutdown
+ no nameif
+ no security-level
+ no ip address
+!
+interface GigabitEthernet0/4
+ description LAN Failover Interface
+!
+interface GigabitEthernet0/5
+ description STATE Failover Interface
+!
+interface Management0/0
+ nameif management
+ security-level 100
+ ip address 192.168.77.201 255.255.255.0 standby 192.168.77.200 
+ management-only
+!
+interface GigabitEthernet1/0
+ nameif external
+ security-level 0
+ ip address la_ip 255.255.255.240 standby 74.201.250.65 
+!
+interface GigabitEthernet1/1
+ shutdown
+ no nameif
+ no security-level
+ no ip address
+!
+interface GigabitEthernet1/2
+ shutdown
+ no nameif
+ no security-level
+ no ip address
+!
+interface GigabitEthernet1/3
+ shutdown
+ no nameif
+ no security-level
+ no ip address
+!
+interface GigabitEthernet1/4
+ shutdown     
+ no nameif
+ no security-level
+ no ip address
+!
+interface GigabitEthernet1/5
+ shutdown
+ no nameif
+ no security-level
+ no ip address
+!
+boot system disk0:/asa861-2-smp-k8.bin
+ftp mode passive
+clock timezone EST -5
+dns domain-lookup internal.10
+dns server-group DefaultDNS
+ name-server 10.21.0.2
+ domain-name bo.inc
+same-security-traffic permit inter-interface
+same-security-traffic permit intra-interface
+object network 10_21_120_188
+ host 10.21.120.188
+object network 10_21_0_200
+ host 10.21.0.200
+object network 10_21_0_206
+ host 10.21.0.206
+object network 10_22_0_10
+ host 10.22.0.10
+object network 10_21_69_9
+ host 10.21.69.9
+object network 10_21_0_2
+ host 10.21.0.2
+object network 10_21_121_54
+ host 10.21.121.54
+object network 10_21_120_238
+ host 10.21.120.238
+object network 10_21_120_235
+ host 10.21.120.235
+object network 10_21_121_53
+ host 10.21.121.53
+object network 10_21_0_202
+ host 10.21.0.202
+object network 10_21_121_23
+ host 10.21.121.23
+object network 10_21_120_237
+ host 10.21.120.237
+object network 10_21_0_206-2
+ host 10.21.0.206
+object network 10_22_0_10-2
+ host 10.22.0.10
+object network 10_21_0_2-2
+ host 10.21.0.2
+object network 10_21_120_238-2
+ host 10.21.120.238
+object network 10_21_120_235-2
+ host 10.21.120.235
+object network 10_21_121_53-2
+ host 10.21.121.53
+object network 10_21_0_203-2
+ host 10.21.0.203
+object network 10_21_0_0
+ subnet 10.21.0.0 255.255.0.0
+object network 10_22_0_0
+ subnet 10.22.0.0 255.255.0.0
+object network 10_23_0_0
+ subnet 10.23.0.0 255.255.0.0
+object network 10_21_0_200-3
+ host 10.21.0.200
+object network 10_1_1_0
+ subnet 10.1.1.0 255.255.255.0
+object network 10_21_0_202-2
+ host 10.21.0.202
+object network 10_21_0_200-2
+ host 10.21.0.200
+object network 10_21_120_234
+ host 10.21.120.234
+object network 10_21_120_234-2
+object network 10_120_237
+object network 10_21_120_237-2
+ host 10.21.120.237
+object network 10_21_121_53-3
+ host 10.21.121.53
+object network 10_21_0_200-4
+ host 10.21.0.200
+object network 10_21_0_202-3
+object network 10_21_121_195
+ host 10.21.121.195
+object network 10_21_121_195_2
+ host 10.21.121.195
+object network 10_21_121_195_3
+ host 10.21.121.195
+object network 10_21_121_195_4
+ host 10.21.121.195
+object network 10_21_121_195-4
+ host 10.21.121.195
+object network 10_21_121_202
+ host 10.21.121.202
+object network 10_21_0_10-2
+object network 10.21.121.251
+object network 10_21.121.251
+object network 10_21_121_251
+ host 10.21.121.251
+object network 10_21_121_248
+ host 10.21.121.248
+object network 10_21_121_252
+ host 10.21.121.252
+object network 10_21_121_251_2
+ host 10.21.121.251
+object network 10_21_121_23-2
+ host 10.21.121.23
+object network 10_21_121_23-3
+ host 10.21.121.23
+object network 10_21_121_23-4
+ host 10.21.121.23
+object network 10_21_121_53-4
+ host 10.21.121.53
+object network 10_21_121_23-5
+ host 10.21.121.23
+object network 10_21_121_53-5
+object-group network bo_net
+ network-object 74.201.250.64 255.255.255.240
+object-group network partners
+ network-object host 67.139.134.194
+ network-object host 67.139.134.195
+ network-object host 12.132.62.50
+ network-object host 107.21.239.36
+ network-object host 206.80.15.66
+ network-object host 206.80.2.2
+ network-object host 64.71.13.106
+ network-object host 205.143.67.250
+ network-object host 205.143.67.251
+ network-object host 65.244.245.5
+ network-object host 194.202.143.5
+ network-object host 63.116.153.5
+ network-object host 80.150.113.186
+ network-object host 193.178.208.72
+ network-object host 170.171.252.210
+ network-object host 170.171.4.10
+ network-object host 170.171.242.11
+ network-object host 83.244.137.162
+ network-object host 203.184.139.137
+ network-object host 63.116.49.34
+ network-object host 63.116.49.35
+ network-object host 63.116.49.36
+ network-object host 91.220.245.181
+ network-object host 91.220.245.169
+ network-object host 50.17.157.218
+ network-object host 93.62.44.35
+ network-object host 188.138.84.171
+ network-object host 78.86.167.222
+ network-object host 78.105.12.225
+ network-object host 94.193.97.52
+ network-object host 77.92.78.251
+ network-object host 155.212.29.82
+ network-object host 67.138.101.57
+ network-object host 70.102.112.171
+ network-object host 38.108.49.2
+ network-object host 38.111.144.18
+ network-object host 123.231.12.70
+ network-object host 199.188.192.129
+ network-object host 54.215.1.133
+ network-object host 114.79.162.3
+ network-object 38.108.107.0 255.255.255.0
+ network-object 206.169.187.192 255.255.255.224
+ network-object 208.91.130.128 255.255.255.128
+ network-object 94.228.70.128 255.255.255.240
+ network-object 178.237.33.184 255.255.255.248
+ network-object host 217.7.140.90
+ network-object 67.152.24.224 255.255.255.224
+ network-object 207.237.185.0 255.255.255.192
+ network-object host linode
+ network-object 91.220.245.0 255.255.255.0
+ network-object host 109.235.141.224
+ network-object host 54.209.212.34
+ network-object host 67.139.134.196
+ network-object host 68.178.16.244
+ network-object host 68.178.16.245
+ network-object host 68.178.16.246
+ network-object host 115.113.16.111
+ network-object host 208.84.225.10
+ network-object host 209.119.93.1
+ network-object host 213.161.89.30
+ network-object host 193.178.208.6
+ network-object host 193.178.208.71
+ network-object host 182.71.74.242
+ network-object host 182.71.74.243
+ network-object 185.36.15.64 255.255.255.240
+ network-object host 50.116.51.80
+ network-object host 123.63.249.169
+ network-object host 49.248.42.218
+ network-object host 122.15.96.206
+ network-object host 52.28.3.47
+ network-object host 52.28.7.250
+ network-object host 54.84.163.139
+ network-object host 54.84.3.112
+object-group network local_nets
+ network-object 10.0.1.0 255.255.255.0
+ network-object 10.1.1.0 255.255.255.0
+ network-object 10.3.1.0 255.255.255.0
+ network-object 10.11.1.0 255.255.255.0
+ network-object 10.12.1.0 255.255.255.0
+ network-object 10.13.0.0 255.255.0.0
+ network-object 10.0.2.0 255.255.255.0
+ network-object 10.0.3.0 255.255.255.0
+ network-object 10.0.4.0 255.255.255.0
+ network-object 10.8.0.0 255.255.255.0
+ network-object 10.2.2.0 255.255.255.0
+ network-object 10.2.4.0 255.255.255.0
+ network-object 10.3.2.0 255.255.255.0
+ network-object 10.3.3.0 255.255.255.0
+ network-object 10.3.4.0 255.255.255.0
+ network-object 10.10.2.0 255.255.255.0
+ network-object 10.10.3.0 255.255.255.0
+ network-object 10.10.4.0 255.255.255.0
+ network-object 10.11.2.0 255.255.255.0
+ network-object 10.11.3.0 255.255.255.0
+ network-object 10.11.4.0 255.255.255.0
+ network-object 10.12.2.0 255.255.255.0
+ network-object 10.12.3.0 255.255.255.0
+ network-object 10.12.4.0 255.255.255.0
+ network-object 10.66.6.0 255.255.255.0
+ network-object 10.21.0.0 255.255.0.0
+ network-object 10.22.0.0 255.255.0.0
+ network-object 10.23.0.0 255.255.0.0
+ network-object 10.24.0.0 255.255.0.0
+ network-object 10.41.0.0 255.255.0.0
+ network-object 10.42.0.0 255.255.0.0
+ network-object 10.43.0.0 255.255.0.0
+ network-object 10.44.0.0 255.255.0.0
+ network-object 10.10.10.0 255.255.255.0
+object-group network S2SVPN_NET1
+ network-object 10.66.0.0 255.255.255.0
+object-group network INAP_NY_NET
+ network-object 10.21.0.0 255.255.0.0
+ network-object 10.22.0.0 255.255.0.0
+ network-object 10.66.6.0 255.255.255.0
+ network-object 10.10.10.0 255.255.255.0
+ network-object 10.23.0.0 255.255.0.0
+object-group network INAP_TO_SKNET
+ network-object host 10.21.120.230
+ network-object host 10.21.120.224
+ network-object host 10.21.121.121
+ network-object host 10.21.121.122
+ network-object host 10.21.121.123
+ network-object host 10.21.121.119
+object-group network S2SVPN_SKNET
+ network-object host 172.26.29.202
+ network-object host 172.26.1.40
+ network-object host 10.62.224.13
+ network-object host 10.58.160.38
+ network-object host 10.58.160.8
+ network-object host 10.62.230.108
+ network-object host 10.62.230.110
+ network-object host 10.62.231.245
+ network-object host 172.26.34.6
+ network-object host 172.26.67.82
+ network-object host 172.26.34.91
+object-group network S2SVPN_NET2
+ network-object 172.31.65.0 255.255.255.0
+object-group network INAP_NY_NET2
+ network-object 10.21.0.0 255.255.0.0
+ network-object 10.22.0.0 255.255.0.0
+ network-object 10.66.6.0 255.255.255.0
+ network-object 10.10.10.0 255.255.255.0
+ network-object 10.23.0.0 255.255.0.0
+access-list outside_access_in extended permit icmp any any 
+access-list outside_access_in extended permit tcp host 74.207.229.105 host 74.201.250.66 eq ssh 
+access-list outside_access_in extended permit tcp host 184.75.22.162 host 74.201.250.66 eq ssh 
+access-list outside_access_in extended permit tcp host 69.193.204.50 host 74.201.250.66 eq ssh 
+access-list outside_access_in extended permit udp any object 10_21_121_54 eq 1194 
+access-list outside_access_in extended permit tcp object-group partners object 10_21_120_238 eq ssh 
+access-list outside_access_in extended permit tcp any object 10_21_120_188 eq www 
+access-list outside_access_in extended permit tcp any object 10_21_0_200 eq https 
+access-list outside_access_in extended permit tcp any object 10_21_0_206 eq www 
+access-list outside_access_in extended permit tcp any object 10_21_0_206-2 eq https 
+access-list outside_access_in extended permit tcp any object 10_21_120_235-2 eq https 
+access-list outside_access_in extended permit tcp any object 10_21_120_235 eq www 
+access-list outside_access_in extended permit tcp any object 10_21_121_53 eq www 
+access-list outside_access_in extended permit tcp any object 10_21_0_202 eq https 
+access-list outside_access_in extended permit tcp any object 10_21_121_23 eq www 
+access-list outside_access_in extended permit tcp any object 10_21_0_203-2 eq https 
+access-list outside_access_in extended permit tcp any object 10_21_120_237 eq www 
+access-list outside_access_in extended permit tcp any object 10_21_121_53-2 eq www 
+access-list outside_access_in extended permit tcp any object 10_21_0_202-2 eq https 
+access-list outside_access_in extended permit tcp any object 10_21_0_200-2 eq 31443 
+access-list outside_access_in extended permit tcp any object 10_21_0_200-3 eq 22443 
+access-list outside_access_in extended permit tcp any object 10_21_120_237-2 eq www 
+access-list outside_access_in extended permit tcp any object 10_21_121_53-3 eq www 
+access-list outside_access_in extended permit tcp any object 10_21_121_53-3 eq https 
+access-list outside_access_in extended permit tcp any object 10_21_121_53-3 eq 20443 
+access-list outside_access_in extended permit tcp any object 10_21_121_195 eq smtp 
+access-list outside_access_in extended permit tcp any object 10_21_121_195 eq 993 
+access-list outside_access_in extended permit tcp any object 10_21_121_195 eq 995 
+access-list outside_access_in extended permit tcp any object 10_21_121_195 eq imap4 
+access-list outside_access_in extended permit tcp any object 10_21_121_195 eq pop3 
+access-list outside_access_in extended permit tcp any object 10_21_121_195 eq 587 
+access-list outside_access_in extended permit tcp any object 10_21_121_251 eq www 
+access-list outside_access_in extended permit tcp any object 10_21_121_251 eq https 
+access-list outside_access_in extended permit tcp any object 10_21_121_251 eq 9999 
+access-list outside_access_in extended permit tcp any object 10_21_121_248 eq www 
+access-list outside_access_in extended permit tcp any object 10_21_121_23 eq 20443 
+access-list outside_access_in extended permit tcp any object 10_21_121_23-3 eq 31443 
+access-list outside_access_in extended permit tcp any object 10_21_121_23-3 eq 20443 
+access-list outside_access_in extended permit tcp any object 10_21_121_23-3 eq 22443 
+access-list outside_access_in extended permit tcp any object 10_21_121_23-3 eq https 
+access-list inside.10_access_out extended permit icmp any any 
+access-list inside.10_access_out extended permit ip any any 
+access-list inside.20_access_out extended permit icmp any any 
+access-list inside.20_access_out extended permit ip any any 
+access-list inside.30_access_out extended permit icmp any any 
+access-list inside.30_access_out extended permit ip any any 
+access-list inside.55_access_out extended permit icmp any any 
+access-list inside.55_access_out extended permit ip any any 
+access-list crypto-1 extended permit ip 10.21.0.0 255.255.0.0 10.66.0.0 255.255.255.0 
+access-list crypto-1 extended permit ip 10.22.0.0 255.255.0.0 10.66.0.0 255.255.255.0 
+access-list crypto-1 extended permit ip 10.66.6.0 255.255.255.0 10.66.0.0 255.255.255.0 
+access-list crypto-1 extended permit ip 10.10.10.0 255.255.255.0 10.66.0.0 255.255.255.0 
+access-list crypto-1 extended permit ip 10.21.0.0 255.255.0.0 172.31.65.0 255.255.255.0 
+access-list crypto-1 extended permit ip 10.22.0.0 255.255.0.0 172.31.65.0 255.255.255.0 
+access-list crypto-1 extended permit ip 10.66.6.0 255.255.255.0 172.31.65.0 255.255.255.0 
+access-list crypto-1 extended permit ip 10.10.10.0 255.255.255.0 172.31.65.0 255.255.255.0 
+access-list crypto-1 extended permit ip 10.23.0.0 255.255.0.0 172.31.65.0 255.255.255.0 
+access-list crypto-1 extended permit ip 10.23.0.0 255.255.0.0 10.66.0.0 255.255.255.0 
+access-list crypto-1 extended permit ip 10.21.0.0 255.255.0.0 10.10.10.0 255.255.255.0 
+access-list crypto-1 extended permit ip 10.22.0.0 255.255.0.0 10.10.10.0 255.255.255.0 
+access-list crypto-2 extended permit ip 10.21.0.0 255.255.0.0 10.66.0.0 255.255.255.0 
+access-list crypto-sk extended permit ip object-group INAP_TO_SKNET object-group S2SVPN_SKNET 
+pager lines 24
+logging enable
+logging timestamp
+logging buffer-size 16384
+logging buffered warnings
+logging trap informational
+logging asdm informational
+logging facility 21
+logging queue 1024
+logging host internal.10 10.21.0.11
+mtu internal.10 1500
+mtu internal.20 1500
+mtu internal.30 1500
+mtu internal.55 1500
+mtu management 1500
+mtu external 1500
+failover
+failover lan unit secondary
+failover lan interface folink GigabitEthernet0/4
+failover link statelink GigabitEthernet0/5
+failover interface ip folink 149.2.48.1 255.255.255.0 standby 149.2.48.2
+failover interface ip statelink 149.2.47.1 255.255.255.0 standby 149.2.47.2
+icmp unreachable rate-limit 1 burst-size 1
+asdm image disk0:/asdm-66114.bin
+no asdm history enable
+arp timeout 14400
+nat (any,any) source static local_nets local_nets destination static local_nets local_nets
+nat (any,any) source static INAP_NY_NET INAP_NY_NET destination static S2SVPN_NET1 S2SVPN_NET1
+nat (any,any) source static INAP_TO_SKNET INAP_TO_SKNET destination static S2SVPN_SKNET S2SVPN_SKNET
+nat (any,any) source static INAP_NY_NET INAP_NY_NET destination static S2SVPN_NET2 S2SVPN_NET2
+nat (any,any) source static INAP_NY_NET2 INAP_NY_NET2 destination static S2SVPN_NET2 S2SVPN_NET2
+!
+object network 10_21_120_188
+ nat (internal.10,external) static 74.201.250.67 service tcp www www 
+object network 10_21_0_200
+ nat (internal.10,external) static 74.201.250.67 service tcp https https 
+object network 10_21_0_206
+ nat (internal.10,external) static 74.201.250.68 service tcp www www 
+object network 10_21_121_54
+ nat (internal.10,external) static 74.201.250.69 service udp 1194 1194 
+object network 10_21_120_238
+ nat (internal.10,external) static 74.201.250.69 service tcp ssh ssh 
+object network 10_21_121_53
+ nat (internal.10,external) static 74.201.250.70 service tcp www www 
+object network 10_21_0_202
+ nat (internal.10,external) static 74.201.250.70 service tcp https https 
+object network 10_21_121_23
+ nat (internal.10,external) static 74.201.250.71 service tcp www www 
+object network 10_21_120_237
+ nat (internal.10,external) static 74.201.250.73 service tcp www www 
+object network 10_21_0_206-2
+ nat (internal.10,external) static 74.201.250.68 service tcp https https 
+object network 10_21_121_53-2
+ nat (internal.10,external) static 74.201.250.75 service tcp www www 
+object network 10_21_0_203-2
+ nat (internal.10,external) static 74.201.250.73 service tcp https https 
+object network 10_21_0_0
+ nat (internal.10,external) dynamic interface
+object network 10_22_0_0
+ nat (internal.20,external) dynamic interface
+object network 10_23_0_0
+ nat (internal.30,external) dynamic interface
+object network 10_1_1_0
+ nat (internal.55,external) dynamic interface
+object network 10_21_121_195
+ nat (internal.10,external) static 74.201.250.67 service tcp 995 995 
+object network 10_21_121_195_2
+ nat (internal.10,external) static 74.201.250.67 service tcp 993 993 
+object network 10_21_121_195_3
+ nat (internal.10,external) static 74.201.250.67 service tcp 587 587 
+object network 10_21_121_195_4
+ nat (internal.10,external) static 74.201.250.67 service tcp imap4 imap4 
+object network 10_21_121_195-4
+ nat (internal.10,external) static 74.201.250.67 service tcp smtp smtp 
+object network 10_21_121_251
+ nat (internal.10,external) static 74.201.250.69 service tcp www www 
+object network 10_21_121_251_2
+ nat (internal.10,external) static 74.201.250.69 service tcp https https 
+object network 10_21_121_23-2
+ nat (internal.10,external) static 74.201.250.71 service tcp 23443 https 
+object network 10_21_121_23-3
+ nat (internal.10,external) static 74.201.250.75 service tcp https https 
+object network 10_21_121_23-4
+ nat (internal.10,external) static 74.201.250.74 service tcp 22443 https 
+object network 10_21_121_53-4
+ nat (internal.10,external) static 74.201.250.72 service tcp https https 
+object network 10_21_121_23-5
+ nat (internal.10,external) static 74.201.250.74 service tcp www www 
+access-group inside.10_access_out in interface internal.10
+access-group inside.20_access_out in interface internal.20
+access-group inside.30_access_out in interface internal.30
+access-group inside.55_access_out in interface internal.55
+access-group outside_access_in in interface external
+route external 0.0.0.0 0.0.0.0 74.201.250.78 1
+timeout xlate 3:00:00
+timeout conn 1:00:00 half-closed 0:10:00 udp 0:02:00 icmp 0:00:02
+timeout sunrpc 0:10:00 h323 0:05:00 h225 1:00:00 mgcp 0:05:00 mgcp-pat 0:05:00
+timeout sip 0:30:00 sip_media 0:02:00 sip-invite 0:03:00 sip-disconnect 0:02:00
+timeout sip-provisional-media 0:02:00 uauth 0:05:00 absolute
+timeout tcp-proxy-reassembly 0:01:00
+timeout floating-conn 0:00:00
+dynamic-access-policy-record DfltAccessPolicy
+user-identity default-domain LOCAL
+aaa authentication ssh console LOCAL 
+http 192.168.1.0 255.255.255.0 management
+snmp-server host internal.10 10.21.0.2 community *****
+snmp-server host internal.10 10.21.0.3 community *****
+snmp-server host internal.10 10.21.0.4 community *****
+snmp-server host internal.10 10.66.0.1 community *****
+snmp-server host internal.10 172.31.65.54 community *****
+no snmp-server location
+no snmp-server contact
+snmp-server community *****
+snmp-server enable traps snmp authentication linkup linkdown coldstart warmstart
+snmp-server enable traps syslog
+snmp-server enable traps ipsec start stop
+snmp-server enable traps memory-threshold
+snmp-server enable traps interface-threshold
+snmp-server enable traps remote-access session-threshold-exceeded
+snmp-server enable traps connection-limit-reached
+snmp-server enable traps cpu threshold rising
+snmp-server enable traps ikev2 start stop
+snmp-server enable traps nat packet-discard
+sysopt noproxyarp internal.10
+sysopt noproxyarp internal.20
+sysopt noproxyarp internal.30
+crypto ipsec ikev1 transform-set ESP-3DES-SHA esp-3des esp-sha-hmac 
+crypto map S2SVPN 1 match address crypto-1
+crypto map S2SVPN 1 set peer 66.151.245.193 
+crypto map S2SVPN 1 set ikev1 transform-set ESP-3DES-SHA
+crypto map S2SVPN 1 set security-association lifetime seconds 3600
+crypto map S2SVPN 2 match address crypto-sk
+crypto map S2SVPN 2 set peer 125.214.160.110 
+crypto map S2SVPN 2 set ikev1 transform-set ESP-3DES-SHA
+crypto map S2SVPN 2 set security-association lifetime seconds 3600
+crypto map S2SVPN interface external
+crypto ikev1 enable external
+crypto ikev1 policy 1
+ authentication pre-share
+ encryption 3des
+ hash sha
+ group 2
+ lifetime 28800
+crypto ikev1 policy 2
+ authentication pre-share
+ encryption 3des
+ hash sha
+ group 2
+ lifetime 480
+telnet timeout 5
+ssh 10.21.0.0 255.255.0.0 internal.10
+ssh 10.66.0.0 255.255.255.0 internal.10
+ssh 10.66.0.20 255.255.255.255 internal.10
+ssh 10.66.6.0 255.255.255.0 internal.10
+ssh 192.168.77.0 255.255.255.0 management
+ssh 206.127.32.55 255.255.255.255 external
+ssh 184.75.22.162 255.255.255.255 external
+ssh ny_ip 255.255.255.255 external
+ssh linode 255.255.255.255 external
+ssh 50.116.51.80 255.255.255.255 external
+ssh timeout 30
+console timeout 0
+management-access management
+threat-detection basic-threat
+threat-detection statistics access-list
+no threat-detection statistics tcp-intercept
+ntp authenticate
+ntp server 69.55.54.17
+ntp server 169.229.70.95
+ssl encryption des-sha1
+username crawls password Cl97x2SRyeE71l.z encrypted
+username kzander password p08ErCdwgrNczZtF encrypted
+tunnel-group 66.151.245.193 type ipsec-l2l
+tunnel-group 66.151.245.193 ipsec-attributes
+ ikev1 pre-shared-key *****
+tunnel-group 125.214.160.110 type ipsec-l2l
+tunnel-group 125.214.160.110 ipsec-attributes
+ ikev1 pre-shared-key *****
+!
+class-map inspection_default
+ match default-inspection-traffic
+!
+!
+policy-map type inspect dns preset_dns_map
+ parameters
+  message-length maximum client auto
+  message-length maximum 512
+policy-map global_policy
+ class inspection_default
+  inspect dns preset_dns_map 
+  inspect ftp 
+  inspect h323 h225 
+  inspect h323 ras 
+  inspect rsh 
+  inspect rtsp 
+  inspect esmtp 
+  inspect sqlnet 
+  inspect skinny  
+  inspect sunrpc 
+  inspect xdmcp 
+  inspect sip  
+  inspect netbios 
+  inspect tftp 
+  inspect ip-options 
+!
+service-policy global_policy global
+prompt hostname context 
+no call-home reporting anonymous
+Cryptochecksum:452e25773d5b5cf9521fbe5330856a0c

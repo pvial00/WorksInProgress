@@ -1,0 +1,52 @@
+globals:
+     rsync_options:      -az
+     distribution_pool:  default
+     logfile: /srv/media/media/logfsdelta.log
+     lockfile: None
+     completion_log: None
+
+modules:
+     media:
+          source:          /srv/media/media
+          destination:     /srv/nfs2/media
+          rsync_options:   --no-links
+
+
+distribution_pools:
+        default:
+          segments:
+               - encode11
+               - encode12
+               - encode13
+               - encode14
+               - encode15
+               - encode16
+               - encode17
+               - encode18
+               - encode19
+               - encode20
+
+
+
+        datasync:
+            segments:
+               - datasync1
+               - datasync2
+               - datasync3
+               - datasync4
+               - datasync5
+               - datasync6
+               - datasync7
+               - datasync8
+               - datasync9
+               - datasync10
+
+
+
+
+mongodb_storage_config:
+        replicaset: prod-rs1
+        hosts:
+                - mongo-datasync1.prod.pnap.ny.boinc:27017
+                - mongo-datasync2.prod.pnap.ny.boinc:27017
+                - mongo-datasync3.prod.pnap.ny.boinc:27017

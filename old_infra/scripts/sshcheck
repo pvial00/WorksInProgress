@@ -1,0 +1,4 @@
+#!/bin/bash
+for i in {10..120}; do
+ssh 172.31.65.$i -t 'ls -al'
+done

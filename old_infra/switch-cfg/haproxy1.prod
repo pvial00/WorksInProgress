@@ -1,0 +1,291 @@
+global
+	log 127.0.0.1   local0
+        log 127.0.0.1   local1 notice
+        #log loghost    local0 info
+        maxconn 4096
+        chroot /usr/share/haproxy
+        uid 99
+        gid 99
+        daemon
+        #debug
+    
+defaults
+        log             global
+        retries         3
+        option          redispatch  
+        maxconn         2000
+        contimeout      5000
+        clitimeout      50000
+        srvtimeout      1800000
+    
+listen stats :8001
+        mode    http
+        stats   enable
+        stats   refresh 5s
+        stats   show-node
+        stats   show-legends
+        stats   realm Haproxy\ Statistics
+        stats   uri /
+        stats   auth beyond:b3y0nd2010
+    
+frontend beyond_dev
+        bind 0.0.0.0:80
+        mode    http
+        option  httplog
+        option  dontlognull
+        option  httpclose
+        option  forwardfor
+        acl api hdr_dom(host) a.b005.net
+        acl boinc hdr_dom(host) boinc.com
+        acl bluewhale hdr_dom(host) b.b005.net
+        acl user_profile_pic_path path_beg /media/profilepic/
+  	acl mediacdn hdr_dom(host) origin.b005.net
+        acl media hdr_dom(host) bypassm.b005.net
+        acl drm hdr_dom(host) d.b005.net
+# for v3
+        acl apiv3 hdr_dom(host) a-v3.b005.net
+        acl bluewhalev3 hdr_dom(host) b-v3.b005.net
+        acl drmv3 hdr_dom(host) d-v3.b005.net
+        acl mediacdnv3 hdr_dom(host) origin-m-v3.b005.net
+        acl imagev3 hdr_dom(host) i-v3.b005.net
+        acl mediav3 hdr_dom(host) m-v3.b005.net
+#        acl media hdr_dom(host) bypassm.b005.net
+        acl imagecdnv3 hdr_dom(host) origin-i-v3.b005.net
+        acl solr hdr_dom(host) solr_prod
+        acl labs hdr_dom(host) labs-vip
+        acl csr hdr_dom(host) csr
+        acl reporting hdr_dom(host) reporting
+        acl solru hdr_dom(host) solr-vip
+#        acl image hdr_dom(host) bypassm.b005.net
+        use_backend a-v3.b005.net if apiv3
+        use_backend b-v3.b005.net if bluewhalev3
+        use_backend d-v3.b005.net if drmv3
+        use_backend m-v3.b005.net if mediav3
+        use_backend i-v3.b005.net if imagev3
+        use_backend origin-m-v3.b005.net if mediacdnv3
+        use_backend origin-i-v3.b005.net if imagecdnv3
+# end v3
+        use_backend a.b005.net if api
+        use_backend b.b005.net if bluewhale
+        use_backend origin.b005.net if mediacdn !user_profile_pic_path
+        use_backend origin.b005.net.nocache if user_profile_pic_path mediacdn
+        use_backend d.b005.net if drm
+        use_backend solr_prod if solr
+        use_backend labs if labs
+        use_backend reporting if reporting
+        use_backend csr if csr
+        use_backend solr-vip if solru
+
+frontend beyond_prod_playcount
+        bind 10.21.121.53:8000
+        mode    http
+        option  httplog
+        option  dontlognull
+        option  httpclose
+        option  forwardfor
+        default_backend playcount    
+    
+#frontend beyond_int
+#        bind 10.21.0.1:80
+#        mode    http
+#        option  httplog
+#        option  dontlognull
+#        option  httpclose
+#        option  forwardfor
+#        acl api hdr_dom(host) a.b005.net
+#        acl boinc hdr_dom(host) boinc.com
+#        acl bluewhale hdr_dom(host) b.b005.net
+#        acl drm hdr_dom(host) d.b005.net
+#        acl mediacdn hdr_dom(host) origin.b005.net
+#        acl media hdr_dom(host) bypassm.b005.net
+#        use_backend a.b005.net if api
+#        use_backend a.b005.net if boinc
+#        use_backend b.b005.net if bluewhale
+#        use_backend d.b005.net if drm
+#        use_backend origin.b005.net if mediacdn 
+
+listen ldap_vip 10.21.121.53:389
+    	default_backend ldap
+    
+backend ldap
+        mode tcp
+            option tcplog
+    	stick-table type ip size 200k expire 60m
+    	stick on src
+        balance leastconn
+        server  ldap1.prod ldap1.prod.pnap.ny.boinc:389 check inter 2000 rise 2 fall 1
+        server  ldap2.prod ldap2.prod.pnap.ny.boinc:389 check inter 2000 rise 2 fall 1
+    
+    
+    
+backend d.b005.net
+  	mode	http
+        balance leastconn
+        server  api1.prod api1.prod.pnap.ny.boinc:9999 check inter 2000 rise 2 fall 5
+        server  api2.prod api2.prod.pnap.ny.boinc:9999 check inter 2000 rise 2 fall 5
+    
+backend a.b005.net
+        mode    http
+        balance leastconn
+        cookie  SERVERID rewrite
+        server  api1.prod api1.prod.pnap.ny.boinc:80 check inter 2000 rise 2 fall 5
+        server  api2.prod api2.prod.pnap.ny.boinc:80 check inter 2000 rise 2 fall 5
+    
+    
+backend b.b005.net
+        mode    http
+        balance leastconn
+        cookie  SERVERID rewrite
+        server  api1.prod api1.prod.pnap.ny.boinc:8080 check inter 2000 rise 2 fall 5
+        server  api2.prod api2.prod.pnap.ny.boinc:8080 check inter 2000 rise 2 fall 5
+    
+    
+backend m.b005.net
+        mode    http
+        balance leastconn
+        cookie  SERVERID rewrite
+        server  api1.prod api1.prod.pnap.ny.boinc:7777 check inter 2000 rise 2 fall 5
+        server  api2.prod api2.prod.pnap.ny.boinc:7777 check inter 2000 rise 2 fall 5
+    
+    
+backend origin.b005.net
+        mode    http
+        balance leastconn
+        cookie  SERVERID rewrite
+        rspadd  Cache-Control:\ max-age=315360000
+    	rspadd  Expires:\ Tue,\ 01\ Dec\ 2037\ 16:00:00\ GMT
+        server  api1.prod api1.prod.pnap.ny.boinc:7777 check inter 2000 rise 2 fall 5
+        server  api2.prod api2.prod.pnap.ny.boinc:7777 check inter 2000 rise 2 fall 5
+    
+backend origin.b005.net.nocache
+        mode    http
+        balance leastconn
+        cookie  SERVERID rewrite
+        #rspadd  Cache-Control:\ max-age=0
+        rspadd  Expires:\ Tue,\ 01\ Dec\ 1972\ 16:00:00\ GMT
+        server  api1.prod api1.prod.pnap.ny.boinc:7777 check inter 2000 rise 2 fall 5
+        server  api2.prod api2.prod.pnap.ny.boinc:7777 check inter 2000 rise 2 fall 5
+
+backend d-v3.b005.net
+    	mode	http
+	balance leastconn
+	server v3api1.prod v3api1.prod.pnap.ny.boinc:80 check inter 2000 rise 2 fall 5
+	server v3api2.prod v3api2.prod.pnap.ny.boinc:80 check inter 2000 rise 2 fall 5
+#	server v3api3.prod v3api3.prod.pnap.ny.boinc:80 check inter 2000 rise 2 fall 5
+
+backend a-v3.b005.net
+	mode http
+	balance leastconn
+	cookie SERVERID rewrite
+	server v3api1.prod v3api1.prod.pnap.ny.boinc:80 check inter 2000 rise 2 fall 5
+	server v3api2.prod v3api2.prod.pnap.ny.boinc:80 check inter 2000 rise 2 fall 5
+#	server v3api3.prod v3api3.prod.pnap.ny.boinc:80 check inter 2000 rise 2 fall 5
+
+backend b-v3.b005.net
+	mode http
+	balance leastconn
+	cookie SERVERID rewrite
+	server v3api1.prod v3api1.prod.pnap.ny.boinc:8081 check inter 2000 rise 2 fall 5
+	server v3api2.prod v3api2.prod.pnap.ny.boinc:8081 check inter 2000 rise 2 fall 5
+#	server v3api3.prod v3api3.prod.pnap.ny.boinc:8081 check inter 2000 rise 2 fall 5
+
+backend m-v3.b005.net
+	mode http
+	balance leastconn
+	cookie SERVERID rewrite
+	server v3api1.prod v3api1.prod.pnap.ny.boinc:7777 check inter 2000 rise 2 fall 5
+	server v3api2.prod v3api2.prod.pnap.ny.boinc:7777 check inter 2000 rise 2 fall 5
+#	server v3api3.prod v3api3.prod.pnap.ny.boinc:7777 check inter 2000 rise 2 fall 5
+
+backend i-v3.b005.net
+	mode http
+	balance leastconn
+	cookie SERVERID rewrite
+	server v3api1.prod v3api1.prod.pnap.ny.boinc:7777 check inter 2000 rise 2 fall 5
+	server v3api2.prod v3api2.prod.pnap.ny.boinc:7777 check inter 2000 rise 2 fall 5
+
+#	server v3api3.prod v3api3.prod.pnap.ny.boinc:7777 check inter 2000 rise 2 fall 5
+
+backend origin-i-v3.b005.net
+	mode http
+	balance leastconn
+	cookie SERVERID rewrite
+	rspadd Cache-Control:\ max-age=315360000
+	rspadd Expires:\ Tue,\ 01\ Dec\ 2037\ 16:00:00\ GMT
+	server v3api1.prod v3api1.prod.pnap.ny.boinc:7777 check inter 2000 rise 2 fall 5
+	server v3api2.prod v3api2.prod.pnap.ny.boinc:7777 check inter 2000 rise 2 fall 5
+#	server v3api3.prod v3api3.prod.pnap.ny.boinc:7777 check inter 2000 rise 2 fall 5
+
+backend origin-i-v3.b005.net.nocache
+	mode http
+	balance leastconn
+	cookie SERVERID rewrite
+	#rspadd Cache-Control:\ max-age=0
+	rspadd Expires:\ Tue,\ 01\ Dec\ 1972\ 16:00:00\ GMT
+	server v3api1.prod v3api1.prod.pnap.ny.boinc:7777 check inter 2000 rise 2 fall 5	
+	server v3api2.prod v3api2.prod.pnap.ny.boinc:7777 check inter 2000 rise 2 fall 5
+#	server v3api3.prod v3api3.prod.pnap.ny.boinc:7777 check inter 2000 rise 2 fall 5
+
+
+backend origin-m-v3.b005.net
+	mode http
+	balance leastconn
+	cookie SERVERID rewrite
+	rspadd Cache-Control:\ max-age=315360000
+	rspadd Expires:\ Tue,\ 01\ Dec\ 2037\ 16:00:00\ GMT
+	server v3api1.prod v3api1.prod.pnap.ny.boinc:7777 check inter 2000 rise 2 fall 5
+	server v3api2.prod v3api2.prod.pnap.ny.boinc:7777 check inter 2000 rise 2 fall 5
+#	server v3api3.prod v3api3.prod.pnap.ny.boinc:7777 check inter 2000 rise 2 fall 5
+
+backend origin-m-v3.b005.net.nocache
+	mode http
+	balance leastconn
+	cookie SERVERID rewrite
+	#rspadd Cache-Control:\ max-age=0
+	rspadd Expires:\ Tue,\ 01\ Dec\ 1972\ 16:00:00\ GMT
+	server v3api1.prod v3api1.prod.pnap.ny.boinc:7777 check inter 2000 rise 2 fall 5	
+	server v3api2.prod v3api2.prod.pnap.ny.boinc:7777 check inter 2000 rise 2 fall 5
+#	server v3api3.prod v3api3.prod.pnap.ny.boinc:7777 check inter 2000 rise 2 fall 5
+
+backend csr
+        mode    http
+        balance leastconn
+        server reporting1 reporting1.prod.pnap.ny.boinc:443 check inter 2000 rise 2 fall 5
+        reqadd X-Forwarded-Protocol:\ https  if { dst_port 443 }
+
+backend solr_prod
+        mode    http
+        balance leastconn
+        cookie  SERVERID rewrite
+        #server  solr-slave-01_prod solr-slave-01_prod.la.bo:8983 check inter 2000 rise 2 fall 5
+        #server  solrslave1.prod solrslave1.prod.pnap.ny.boinc:8983 check inter 2000 rise 2 fall 5
+        server  solrslave2.prod solrslave2.prod.pnap.ny.boinc:8983 check inter 2000 rise 2 fall 5
+        server  solrslave3.prod solrslave3.prod.pnap.ny.boinc:8983 check inter 2000 rise 2 fall 5
+        #server  solr-slave-02_prod solr-slave-02_prod.la.bo:8983 check inter 2000 rise 2 fall 5
+        #server  solr-slave-03_prod solr-slave-03_prod.la.bo:8983 check inter 2000 rise 2 fall 5
+
+backend solr-vip
+        mode    http
+        balance leastconn
+        cookie  SERVERID rewrite
+        #server  solrslave1.prod solrslave1.prod.pnap.ny.boinc:8983 check inter 2000 rise 2 fall 5
+        server  solrslave2.prod solrslave2.prod.pnap.ny.boinc:8983 check inter 2000 rise 2 fall 5
+        server  solrslave3.prod solrslave3.prod.pnap.ny.boinc:8983 check inter 2000 rise 2 fall 5
+
+backend playcount
+        mode    http
+        balance leastconn
+        server  playcount1 playcount1.prod.pnap.ny.boinc:8000 check inter 2000 rise 2 fall 5
+        server  playcount2 playcount2.prod.pnap.ny.boinc:8000 check inter 2000 rise 2 fall 5
+        server  playcount3 playcount3.prod.pnap.ny.boinc:8000 check inter 2000 rise 2 fall 5
+
+backend labs
+        mode    http
+        balance leastconn
+        server labs1 labs1.prod.pnap.ny.boinc:80 check inter 2000 rise 2 fall 5
+        server labs2 labs2.prod.pnap.ny.boinc:80 check inter 2000 rise 2 fall 5
+
+backend reporting
+        mode    http
+        balance leastconn
+        server reporting1 reporting1.prod.pnap.ny.boinc:80 check inter 2000 rise 2 fall 5

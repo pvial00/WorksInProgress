@@ -1,0 +1,237 @@
+## Last commit: 2015-09-15 03:33:34 EDT by root
+version 10.3R1.9;
+system {
+    host-name cab2.impi1;
+    time-zone EST;
+    root-authentication {
+        encrypted-password "$1$rCh9xUeu$6Z21dSSVH4aGSQ8pD8oRC1"; ## SECRET-DATA
+    }
+    services {
+        ssh {
+            protocol-version v2;
+        }
+        netconf {
+            ssh;
+        }
+        web-management {
+            http;
+        }
+    }
+    syslog {
+        user * {
+            any emergency;
+        }
+        file messages {                 
+            any notice;
+            authorization info;
+        }
+        file interactive-commands {
+            interactive-commands any;
+        }
+    }
+}
+interfaces {
+    ge-0/0/0 {
+        unit 0 {
+            family ethernet-switching;
+        }
+    }
+    ge-0/0/1 {
+        unit 0 {
+            family ethernet-switching;
+        }
+    }
+    ge-0/0/2 {
+        mtu 1500;
+        unit 0 {
+            family ethernet-switching { 
+                port-mode access;
+            }
+        }
+    }
+    ge-0/0/3 {
+        unit 0 {
+            family ethernet-switching;
+        }
+    }
+    ge-0/0/4 {
+        unit 0 {
+            family ethernet-switching;
+        }
+    }
+    ge-0/0/5 {
+        unit 0 {
+            family ethernet-switching;
+        }
+    }
+    ge-0/0/6 {
+        unit 0 {
+            family ethernet-switching;
+        }                               
+    }
+    ge-0/0/7 {
+        unit 0 {
+            family ethernet-switching;
+        }
+    }
+    ge-0/0/8 {
+        unit 0 {
+            family ethernet-switching;
+        }
+    }
+    ge-0/0/9 {
+        unit 0 {
+            family ethernet-switching;
+        }
+    }
+    ge-0/0/10 {
+        unit 0 {
+            family ethernet-switching;
+        }
+    }
+    ge-0/0/11 {
+        unit 0 {                        
+            family ethernet-switching;
+        }
+    }
+    ge-0/0/12 {
+        unit 0 {
+            family ethernet-switching;
+        }
+    }
+    ge-0/0/13 {
+        unit 0 {
+            family ethernet-switching;
+        }
+    }
+    ge-0/0/14 {
+        unit 0 {
+            family ethernet-switching;
+        }
+    }
+    ge-0/0/15 {
+        unit 0 {
+            family ethernet-switching;
+        }
+    }                                   
+    ge-0/0/16 {
+        unit 0 {
+            family ethernet-switching;
+        }
+    }
+    ge-0/0/17 {
+        unit 0 {
+            family ethernet-switching;
+        }
+    }
+    ge-0/0/18 {
+        unit 0 {
+            family ethernet-switching;
+        }
+    }
+    ge-0/0/19 {
+        unit 0 {
+            family ethernet-switching;
+        }
+    }
+    ge-0/0/20 {
+        unit 0 {
+            family ethernet-switching;  
+        }
+    }
+    ge-0/0/21 {
+        unit 0 {
+            family ethernet-switching;
+        }
+    }
+    ge-0/0/22 {
+        unit 0 {
+            family ethernet-switching;
+        }
+    }
+    ge-0/0/23 {
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members impi;
+                }
+            }
+        }
+    }
+    ge-0/1/0 {                          
+        unit 0 {
+            family ethernet-switching;
+        }
+    }
+    xe-0/1/0 {
+        unit 0 {
+            family ethernet-switching;
+        }
+    }
+    ge-0/1/1 {
+        unit 0 {
+            family ethernet-switching;
+        }
+    }
+    xe-0/1/1 {
+        unit 0 {
+            family ethernet-switching;
+        }
+    }
+    ge-0/1/2 {
+        unit 0 {
+            family ethernet-switching;
+        }                               
+    }
+    ge-0/1/3 {
+        unit 0 {
+            family ethernet-switching;
+        }
+    }
+    vlan {
+        unit 0 {
+            family inet;
+        }
+        unit 30 {
+            family inet {
+                address 10.23.5.20/16;
+            }
+        }
+    }
+}
+routing-options {
+    static {
+        route 0.0.0.0/0 next-hop 10.23.0.1;
+    }
+}
+protocols {                             
+    rstp;
+    lldp {
+        interface all;
+    }
+}
+ethernet-switching-options {
+    voip;
+}
+vlans {
+    default {
+        l3-interface vlan.0;
+    }
+    impi {
+        vlan-id 30;
+        interface {
+            ge-0/0/23.0;
+        }
+        l3-interface vlan.30;
+    }
+    service {
+        vlan-id 10;
+    }
+    storage {                           
+        vlan-id 20;
+    }
+}
+poe {
+    interface all;
+}

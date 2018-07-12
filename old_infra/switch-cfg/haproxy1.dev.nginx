@@ -1,0 +1,123 @@
+user  www-data;
+worker_processes  16;
+
+#error_log  logs/error.log;
+#error_log  logs/error.log  notice;
+#error_log  logs/error.log  info;
+error_log  /var/log/nginx/error.log info;
+
+pid        /var/run/nginx.pid;
+
+events {
+    worker_connections 1024;
+    multi_accept on;
+}
+
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+    log_format main '$remote_addr - $remote_user $time_local $status "$request" $host $body_bytes_sent "$http_referer" "$http_user_agent" "$http_x_forwarded_for" $request_time $request_length $upstream_addr $upstream_status $upstream_response_time $upstream_http_host';
+
+    access_log  /var/log/nginx/access.log main;
+
+    #log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+    #                  '$status $body_bytes_sent "$http_referer" '
+    #                  '"$http_user_agent" "$http_x_forwarded_for"';
+
+    sendfile        on;
+    tcp_nopush      off; ## http://wiki.nginx.org/ReadMoreAboutTcpNopush
+    tcp_nodelay     on; ## http://wiki.nginx.org/ReadMoreAboutTcpNodelay
+    server_tokens   off; ## whether to send the Nginx version number in error pages and server header.
+    ignore_invalid_headers    off;
+
+    #keepalive_requests  100;
+    #keepalive_timeout   65 60;
+    keepalive_timeout   0;
+
+    gzip on;
+    gzip_vary on;
+    gzip_proxied any;
+    gzip_buffers 16 8k;
+    gzip_comp_level 6;
+    gzip_disable "MSIE [1-6]\.(?!.*SV1)";
+    gzip_types text/plain text/css text/xml application/x-javascript application/xml application/atom+xml text/javascript;
+
+    ## return 444 for all undefined and blank hosts
+    #server {
+	#    listen 443 ssl;	
+    #    server_name _;
+    #    return 444; 
+    #}
+    ## dev v2
+    server {
+        listen       443 ssl;
+        ssl on;
+        server_name  a-dev.b005.net b-dev.b005.net m-dev.b005.net d-dev.b005.net;
+
+        access_log          /var/log/nginx/ssl.dev.b005.net-access.log main;
+        ssl_certificate     /etc/ssl/b005-wildcard.crt;
+        ssl_certificate_key /etc/ssl/com-wildcard.b005.net.key;
+	#ssl_protocols TLSv1;
+	#ssl_ciphers ALL;
+	#ssl_prefer_server_ciphers on;
+	#client_max_body_size 50m;
+	#client_body_buffer_size 324k;
+
+        location / {
+            proxy_pass http://10.21.121.23:80;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header Host $host;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_redirect off;
+	    #proxy_buffering on;
+	    #proxy_buffer_size 3000k; 
+	    #proxy_buffers 384 8k;
+	    #proxy_busy_buffers_size 3000k;
+	    #proxy_temp_path /tmp;
+	    #proxy_temp_file_write_size 3000k;
+	    client_max_body_size 50m;
+	    #client_body_buffer_size 3000k;
+        }
+        location = /favicon.ico { access_log off; log_not_found off; }	
+        location = /robots.txt  { access_log off; log_not_found off; }
+        location ~ /\.          { deny all; access_log off; log_not_found off; }
+    }
+    ## dev v3
+    server {
+        listen       443 ssl;
+        ssl on;
+        server_name  d-dev3.b005.net;
+
+        access_log          /var/log/nginx/ssl.dev3.b005.net-access.log main;
+        ssl_certificate     /etc/ssl/b005-wildcard.crt;
+        ssl_certificate_key /etc/ssl/com-wildcard.b005.net.key;
+	#ssl_protocols TLSv1;
+	#ssl_ciphers ALL;
+	#ssl_prefer_server_ciphers on;
+	#client_max_body_size 50m;
+	#client_body_buffer_size 324k;
+	ssl_ciphers "ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA:ECDHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256:DHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA:ECDHE-RSA-DES-CBC3-SHA:EDH-RSA-DES-CBC3-SHA:AES256-GCM-SHA384:AES128-GCM-SHA256:AES256-SHA256:AES128-SHA256:AES256-SHA:AES128-SHA:DES-CBC3-SHA:HIGH:!aNULL:!eNULL:!EXPORT:!DES:!MD5:!PSK:!RC4";
+
+        location / {
+            proxy_pass http://10.21.121.23:80;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header Host $host;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_redirect off;
+	    #proxy_buffering on;
+	    #proxy_buffer_size 3000k; 
+	    #proxy_buffers 384 8k;
+	    #proxy_busy_buffers_size 3000k;
+	    #proxy_temp_path /tmp;
+	    #proxy_temp_file_write_size 3000k;
+	    client_max_body_size 50m;
+	    #client_body_buffer_size 3000k;
+        }
+        location = /favicon.ico { access_log off; log_not_found off; }	
+        location = /robots.txt  { access_log off; log_not_found off; }
+        location ~ /\.          { deny all; access_log off; log_not_found off; }
+    }
+
+}
+
