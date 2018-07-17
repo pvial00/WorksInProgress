@@ -1,0 +1,4 @@
+zone "openknetworks.com" {
+        type master;
+        file "/etc/bind/db.openknetworks.com";
+};

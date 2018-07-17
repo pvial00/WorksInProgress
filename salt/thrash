@@ -1,0 +1,2 @@
+apt-get install python-dev python-pip nmap sipcalc python-virtualenv iftop apache2-utils
+   38  apt-get install salt-master salt-minion
