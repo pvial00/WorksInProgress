@@ -3,7 +3,7 @@ import os
 #import md5
 
 database = "file.db"
-mainpath = "/usr"
+mainpath = "/Users/pvial/work"
 
 def builddb():
 	allfiles = subprocess.Popen(["find", mainpath, "-type", "f"], stdout=subprocess.PIPE).communicate()[0]
